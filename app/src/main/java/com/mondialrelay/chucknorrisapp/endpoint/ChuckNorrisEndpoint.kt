@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface ChuckNorrisEndpoint {
 
     @GET("jokes/random")
-    fun getRandomJoke() : Joke
+    suspend fun getRandomJoke() : Joke
 }

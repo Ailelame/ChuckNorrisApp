@@ -5,7 +5,7 @@ import com.mondialrelay.chucknorrisapp.models.Joke
 
 class ChuckNorrisManager(private val endpoint: ChuckNorrisEndpoint) {
 
-    fun getJoke(): Joke {
+    suspend fun getJoke(): Joke {
         return endpoint.getRandomJoke()
     }
 

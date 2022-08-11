@@ -11,8 +11,8 @@ import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
 
-    private val viewModel : HomeViewModel by inject()
-    private lateinit var binding : FragmentMainBinding
+    private val viewModel: HomeViewModel by inject()
+    private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,13 +26,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO ajouter un loader pendant le chargement de la blague (progress bar dans le xml avec controle de la visibilité
+        // TODO puis ajouter un bouton pour randomiser la blague
+
         (viewModel.url as MutableLiveData).observe(this.viewLifecycleOwner) {
             binding.textView2.text = it
 
         }
         viewModel.test()
 
-     //   (viewModel.url as MutableLiveData).postValue("odsfnl")
     }
 
 
