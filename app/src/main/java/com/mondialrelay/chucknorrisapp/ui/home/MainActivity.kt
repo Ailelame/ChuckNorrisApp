@@ -1,9 +1,9 @@
-package com.mondialrelay.chucknorrisapp
+package com.mondialrelay.chucknorrisapp.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
+import com.mondialrelay.chucknorrisapp.R
 import com.mondialrelay.chucknorrisapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,14 +13,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding.textView.text = "Bonjour"
-
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-
-
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
     }
 }
 
