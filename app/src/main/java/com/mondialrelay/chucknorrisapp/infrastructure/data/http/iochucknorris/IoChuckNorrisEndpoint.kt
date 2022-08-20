@@ -1,5 +1,6 @@
 package com.mondialrelay.chucknorrisapp.infrastructure.data.http.iochucknorris
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,6 +28,14 @@ private val rf by lazy {
 private val okHttp by lazy {
     OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor())
-        .readTimeout(10000, TimeUnit.MILLISECONDS)
+        .addInterceptor(Interceptor { chain ->
+            try {
+                chain.proceed(chain.request())
+            } catch (ex: Exception) {
+                throw ex
+            }
+        })
+        .connectTimeout(5000, TimeUnit.MILLISECONDS)
+        .readTimeout(5000, TimeUnit.MILLISECONDS)
         .build()
 }

@@ -117,7 +117,11 @@ class ChuckNorrisApplication : android.app.Application() {
  *      +- fichier de config (assets?)
  *      +- adherence au materiel (differents constructeurs)
  * +- Gestion des erreurs
+ *      +- Gestion erreurs dans Retrofit
  *      +- Exceptions, validable ?
+ * +- RetroFit
+ *      +- Gestion erreurs dans Retrofit
+ *      +- suspend + try/catch ?
  * +- Custom Metrics ?
  */
 

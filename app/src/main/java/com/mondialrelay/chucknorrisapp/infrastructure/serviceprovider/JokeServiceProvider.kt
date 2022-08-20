@@ -7,9 +7,13 @@ import com.mondialrelay.chucknorrisapp.infrastructure.data.http.iochucknorris.io
 class JokeServiceProvider : JokeSpi {
 
     override suspend fun fetch(): JokeModel {
-        return ioChuckNorrisEndpoint
-            .getRandomJoke()
-            .toModel()
+        return try {
+            ioChuckNorrisEndpoint
+                .getRandomJoke()
+                .toModel()
+        } catch (ex: Exception) {
+            JokeModel(ex.message ?: "!")
+        }
     }
 
 }
