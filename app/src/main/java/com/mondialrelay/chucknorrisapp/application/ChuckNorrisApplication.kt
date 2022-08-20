@@ -108,6 +108,10 @@ class ChuckNorrisApplication : android.app.Application() {
  *      +- two-way (ex: click sur bouton) ?
  *      +-  V <------ VM ------> M
  *          V . . . > VM
+ * +- Activity
+ *      +- Navgraph
+ *      +- Structure des layouts / fragments
+ *      +- Jetpack Compose
  * +- Exemple service (scanner ?)
  * +- Divers
  *      +- fichier de config (assets?)
