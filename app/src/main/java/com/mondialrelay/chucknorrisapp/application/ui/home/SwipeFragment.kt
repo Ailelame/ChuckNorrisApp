@@ -37,6 +37,10 @@ class SwipeFragment : Fragment() {
         initObserversListeners()
     }
 
+    // endregion
+
+    // region -------- UI
+
     private fun initObserversListeners() {
         viewModel.jokeText.observe(this.viewLifecycleOwner) {
             uiDisplayJokeText(it)
@@ -45,10 +49,6 @@ class SwipeFragment : Fragment() {
             viewModel.fireRefresh()
         }
     }
-
-    // endregion
-
-    // region -------- UI
 
     private fun uiDisplayJokeText(text: String) {
         arrayList.add(0, text) // new joke first

@@ -12,7 +12,7 @@ class JokeServiceProvider : JokeSpi {
                 .getRandomJoke()
                 .toModel()
         } catch (ex: Exception) {
-            JokeModel(ex.message ?: "!")
+            JokeModel(text = ex.message ?: "!", rating = 0.0f )
         }
     }
 

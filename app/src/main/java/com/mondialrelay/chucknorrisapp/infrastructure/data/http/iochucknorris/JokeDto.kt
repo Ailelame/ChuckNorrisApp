@@ -24,6 +24,9 @@ data class JokeDto(
 ) {
     fun toModel(): JokeModel =
         JokeModel(
-            text = value ?: ""
+            text = value ?: "",
+            rating = 2.5f,
+            createdAt = createdAt ?: "",
+            id = id ?: "",
         )
 }

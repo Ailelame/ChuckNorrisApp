@@ -12,7 +12,7 @@ import org.koin.android.ext.android.get
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewBinding: FragmentHomeBinding
 
     // region -------- INITIALISATION
 
@@ -23,8 +23,8 @@ class HomeFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         viewModel.jokeApi = get()
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        viewBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,6 +33,10 @@ class HomeFragment : Fragment() {
         viewModel.fireFetchButton()
     }
 
+    // endregion
+
+    // region -------- UI
+
     private fun initObserversListeners() {
         viewModel.jokeText.observe(this.viewLifecycleOwner) {
             uiDisplayJokeText(it)
@@ -40,32 +44,28 @@ class HomeFragment : Fragment() {
         viewModel.progressBar.observe(this.viewLifecycleOwner) {
             uiAnimProgressBar(it)
         }
-        binding.button.setOnClickListener {
+        viewBinding.button.setOnClickListener {
             viewModel.fireFetchButton()
         }
     }
 
-    // endregion
-
-    // region -------- UI
-
     private fun uiDisplayJokeText(text: String) {
         uiAnimProgressBar(false)
-        binding.textView2.text = text
-        binding.textView2.visibility = View.VISIBLE
+        viewBinding.textView2.text = text
+        viewBinding.textView2.visibility = View.VISIBLE
     }
 
     private fun uiAnimProgressBar(state: Boolean) {
         if (state) {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.progressBar.isIndeterminate = true
-            binding.button.isEnabled = false
-            binding.textView2.visibility = View.GONE
-            binding.textView2.text = ""
+            viewBinding.progressBar.visibility = View.VISIBLE
+            viewBinding.progressBar.isIndeterminate = true
+            viewBinding.button.isEnabled = false
+            viewBinding.textView2.visibility = View.GONE
+            viewBinding.textView2.text = ""
         } else {
-            binding.progressBar.visibility = View.GONE
-            binding.button.isEnabled = true
-            binding.textView2.visibility = View.VISIBLE
+            viewBinding.progressBar.visibility = View.GONE
+            viewBinding.button.isEnabled = true
+            viewBinding.textView2.visibility = View.VISIBLE
         }
     }
 
