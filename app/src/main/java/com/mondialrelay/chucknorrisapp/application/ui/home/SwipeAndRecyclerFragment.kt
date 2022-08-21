@@ -30,6 +30,8 @@ class SwipeAndRecyclerFragment : Fragment() {
         viewModel = ViewModelProvider(this)[SwipeAndRecyclerViewModel::class.java]
         viewModel.jokeApi = get()
 
+        rvAdapter = RVAdapter(viewModel)
+
         viewBinding = FragmentSwipeAndRecyclerBinding.inflate(layoutInflater, container, false)
         viewBinding.recyclerView.adapter = rvAdapter
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(context).apply {
@@ -50,10 +52,7 @@ class SwipeAndRecyclerFragment : Fragment() {
     private fun initObserversListeners() {
         with(viewModel) {
             liveJokesList.observe(viewLifecycleOwner) { (list, position) ->
-                if (list != null)
-                    uiUpdateJokes(list, position!!)
-                else
-                    uiClearJokes()
+                uiUpdateJokes(list, position)
             }
         }
         with(viewBinding) {
@@ -66,27 +65,33 @@ class SwipeAndRecyclerFragment : Fragment() {
         }
     }
 
-    private fun uiUpdateJokes(jokesList: List<JokeModel>, insertPosition: Int) {
-        rvAdapter.list.clear()
-        rvAdapter.list.addAll(0, jokesList)
-        rvAdapter.notifyItemInserted(insertPosition)
-        viewBinding.recyclerView.scrollToPosition(0)
+    private fun uiUpdateJokes(jokesList: List<JokeModel>, position: Int?) {
+        when {
+            jokesList.isEmpty() -> {
+                rvAdapter.notifyItemRangeRemoved(0, rvAdapter.list.size)
+                rvAdapter.list.clear()
+            }
+            jokesList.size > rvAdapter.list.size -> {
+                rvAdapter.list.clear()
+                rvAdapter.list.addAll(0, jokesList)
+                rvAdapter.notifyItemInserted(position ?: 0)
+                viewBinding.recyclerView.scrollToPosition(position ?: 0)
+            }
+            else ->
+                rvAdapter.notifyItemChanged(position ?: 0)
+        }
         viewBinding.swiperefresh.isRefreshing = false
     }
 
-    private fun uiClearJokes() {
-        rvAdapter.notifyItemRangeRemoved(0, rvAdapter.list.size)
-        rvAdapter.list.clear()
-    }
-
-    private val rvAdapter = RVAdapter()
+    private lateinit var rvAdapter: RVAdapter
 
     // endregion
 
 }
 
 class RVAdapter(
-    val list: MutableList<JokeModel> = mutableListOf()
+    val viewModel: SwipeAndRecyclerViewModel,
+    val list: MutableList<JokeModel> = mutableListOf(),
 ) : RecyclerView.Adapter<RVAdapter.RVViewHolder>() {
 
     class RVViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -102,6 +107,12 @@ class RVAdapter(
             .inflate(R.layout.recycler_simple_item, viewGroup, false)
             .let { view ->
                 RVViewHolder(view)
+                    .apply {
+                        view.findViewById<RatingBar>(R.id.ratingBar)
+                            .setOnRatingBarChangeListener { _, fl, _ ->
+                                viewModel.actionRate.invoke(this.adapterPosition, fl)
+                            }
+                    }
             }
     }
 

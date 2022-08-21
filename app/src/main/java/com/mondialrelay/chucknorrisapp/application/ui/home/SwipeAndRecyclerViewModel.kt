@@ -21,7 +21,7 @@ class SwipeAndRecyclerViewModel : ViewModel() {
     val liveJokesList = LiveDataWithParam<MutableList<JokeModel>, Int>()
 
     val actionRefresh = { doFetchJoke() }
-    val actionRate = { rating: Float -> doRate(rating) }
+    val actionRate = { item: Int, rating: Float -> doRate(item, rating) }
     val actionClear = { doClear() }
 
     // endregion
@@ -31,18 +31,22 @@ class SwipeAndRecyclerViewModel : ViewModel() {
     private val jokesList = mutableListOf<JokeModel>()
 
     private fun doFetchJoke() = viewModelScope.launch(Dispatchers.IO) {
-        jokeApi.fetch().apply {
-            jokesList.add(0, this)
-            liveJokesList.postValueAndParam(jokesList, 0)
-        }
+        jokeApi
+            .fetch()
+            .apply {
+                jokesList.add(0, this)
+                liveJokesList.postValueAndParam(jokesList, 0)
+            }
     }
 
-    private fun doRate(rating: Float) = viewModelScope.launch(Dispatchers.IO) {
+    private fun doRate(item: Int, rating: Float) = viewModelScope.launch(Dispatchers.IO) {
+        jokesList[item].rating = rating
+        liveJokesList.postValueAndParam(jokesList, item)
     }
 
     private fun doClear() = viewModelScope.launch(Dispatchers.IO) {
         jokesList.clear()
-        liveJokesList.postParamOnly(0)
+        liveJokesList.postValueOnly(jokesList)
     }
 
     // endregion
