@@ -7,17 +7,16 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mondialrelay.chucknorrisapp.R
 import com.mondialrelay.chucknorrisapp.databinding.FragmentSwipeAndRecyclerBinding
 import com.mondialrelay.chucknorrisapp.domain.model.JokeModel
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 class SwipeAndRecyclerFragment : Fragment() {
 
-    private lateinit var viewModel: SwipeAndRecyclerViewModel
+    private val viewModel: SwipeAndRecyclerViewModel by inject()
     private lateinit var viewBinding: FragmentSwipeAndRecyclerBinding
 
     // region -------- INITIALISATION
@@ -27,9 +26,6 @@ class SwipeAndRecyclerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[SwipeAndRecyclerViewModel::class.java]
-        viewModel.jokeApi = get()
-
         rvAdapter = RVAdapter(viewModel)
 
         viewBinding = FragmentSwipeAndRecyclerBinding.inflate(layoutInflater, container, false)

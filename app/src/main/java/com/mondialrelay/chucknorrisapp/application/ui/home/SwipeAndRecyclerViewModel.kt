@@ -7,16 +7,13 @@ import com.mondialrelay.chucknorrisapp.domain.model.JokeModel
 import com.mondialrelay.chucknorrisapp.domain.port.api.JokeApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
-class SwipeAndRecyclerViewModel : ViewModel() {
+class SwipeAndRecyclerViewModel(
+    private val jokeApi: JokeApi
+) : ViewModel(), KoinComponent {
 
-    // region -------- DOMAIN APIs
-
-    lateinit var jokeApi: JokeApi
-
-    // endregion
-
-    // region -------- VM PROPERTIES AND ACTIONS
+    // region -------- VM LIVEDATA AND ACTIONS
 
     val liveJokesList = LiveDataWithParam<MutableList<JokeModel>, Int>()
 

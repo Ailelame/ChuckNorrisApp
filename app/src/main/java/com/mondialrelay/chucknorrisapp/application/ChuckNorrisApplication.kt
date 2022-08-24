@@ -5,8 +5,6 @@ import android.os.StrictMode
 import android.util.Log
 import com.mondialrelay.chucknorrisapp.BuildConfig
 import com.mondialrelay.chucknorrisapp.application.di.appModule
-import com.mondialrelay.chucknorrisapp.application.di.domainModule
-import com.mondialrelay.chucknorrisapp.application.di.infrastructureModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -63,21 +61,11 @@ class ChuckNorrisApplication : android.app.Application() {
         startKoin {
             androidLogger()
             androidContext(this@ChuckNorrisApplication)
-            modules(
-                appModule,
-                domainModule,
-                infrastructureModule,
-            )
-//            modules(
-//                with(Module(this@App)) {
-//                    if (BuildConfig.DEBUG) debugModule else appModule
-//                }
-//            )
+            modules(appModule)
         }
     }
 
     private fun initializeDebug() {
-//        Timber.plant(Timber.DebugTree())
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()

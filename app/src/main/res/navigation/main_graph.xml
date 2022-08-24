@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/swipeAndRecyclerFragment">
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.mondialrelay.chucknorrisapp.application.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_swipeAndRecyclerFragment"
+            app:destination="@id/swipeAndRecyclerFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -15,6 +25,10 @@
         android:id="@+id/swipeAndRecyclerFragment"
         android:name="com.mondialrelay.chucknorrisapp.application.ui.home.SwipeAndRecyclerFragment"
         android:label="SwipeAndRecyclerFragment"
-        tools:layout="@layout/fragment_swipe_and_recycler" />
+        tools:layout="@layout/fragment_swipe_and_recycler" >
+        <action
+            android:id="@+id/action_swipeAndRecyclerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>
