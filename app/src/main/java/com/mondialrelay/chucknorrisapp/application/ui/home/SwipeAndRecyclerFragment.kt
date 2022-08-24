@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,7 @@ class SwipeAndRecyclerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserversListeners()
+        uiShowToast()
     }
 
     // endregion
@@ -66,6 +68,7 @@ class SwipeAndRecyclerFragment : Fragment() {
             jokesList.isEmpty() -> {
                 rvAdapter.notifyItemRangeRemoved(0, rvAdapter.list.size)
                 rvAdapter.list.clear()
+                uiShowToast()
             }
             jokesList.size > rvAdapter.list.size -> {
                 rvAdapter.list.clear()
@@ -77,6 +80,10 @@ class SwipeAndRecyclerFragment : Fragment() {
                 rvAdapter.notifyItemChanged(position ?: 0)
         }
         viewBinding.swiperefresh.isRefreshing = false
+    }
+
+    private fun uiShowToast() {
+        Toast.makeText(context, "Swipe down to fetch a joke", Toast.LENGTH_SHORT).show()
     }
 
     private lateinit var rvAdapter: RVAdapter

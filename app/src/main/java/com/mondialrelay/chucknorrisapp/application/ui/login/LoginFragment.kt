@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
     private fun initObserversListeners() {
         with(viewModel) {
             liveUser.observe(viewLifecycleOwner) { (user, _) ->
-                findNavController().navigate(R.id.action_loginFragment_to_swipeAndRecyclerFragment)
+                navValidate()
             }
         }
         with(viewBinding) {
@@ -45,6 +45,10 @@ class LoginFragment : Fragment() {
                 viewModel.actionLogin.invoke(editTextTextPersonName.text.toString(), editTextTextPassword.text.toString())
             }
         }
+    }
+
+    private fun navValidate() {
+        findNavController().navigate(R.id.action_loginFragment_to_swipeAndRecyclerFragment)
     }
 
 }
