@@ -8,8 +8,8 @@ import org.koin.dsl.module
 
 val infrastructureModule = module {
 
-    single { UserServiceProvider() as UserSpi }
+    single<UserSpi> { UserServiceProvider() }
 
-    single { JokeServiceProvider() as JokeSpi }
+    single<JokeSpi> { JokeServiceProvider() }
 
 }

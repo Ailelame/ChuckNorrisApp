@@ -12,17 +12,14 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_swipeAndRecyclerFragment"
-            app:destination="@id/swipeAndRecyclerFragment" />
+            app:destination="@id/swipeAndRecyclerFragment"
+            app:popUpTo="@id/swipeAndRecyclerFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/swipeAndRecyclerFragment"
         android:name="com.mondialrelay.chucknorrisapp.application.ui.home.SwipeAndRecyclerFragment"
         android:label="SwipeAndRecyclerFragment"
-        tools:layout="@layout/fragment_swipe_and_recycler">
-        <action
-            android:id="@+id/action_swipeAndRecyclerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_swipe_and_recycler"/>
 
 </navigation>

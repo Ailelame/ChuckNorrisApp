@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mondialrelay.chucknorrisapp.R
@@ -44,11 +46,16 @@ class LoginFragment : Fragment() {
             button2.setOnClickListener {
                 viewModel.actionLogin.invoke(editTextTextPersonName.text.toString(), editTextTextPassword.text.toString())
             }
+            editTextTextPersonName.addTextChangedListener {
+                textInputLayout.error = if ("Chuck".startsWith(it?.toString() ?: "")) null else "Chuck, ONLY Chuck !"
+            }
         }
     }
 
     private fun navValidate() {
         findNavController().navigate(R.id.action_loginFragment_to_swipeAndRecyclerFragment)
     }
+
+    // endregion
 
 }
