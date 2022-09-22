@@ -1,8 +1,9 @@
 package com.mondialrelay.chucknorrisapp.application.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mondialrelay.chucknorrisapp.application.ui.helpers.LiveDataWithParam
 import com.mondialrelay.chucknorrisapp.domain.model.JokeModel
 import com.mondialrelay.chucknorrisapp.domain.port.api.JokeApi
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +16,11 @@ class SwipeAndRecyclerViewModel(
 
     // region -------- VM LIVEDATA AND ACTIONS
 
-    val liveJokesList = LiveDataWithParam<MutableList<JokeModel>, Int>()
+    private val _liveJokesList = MutableLiveData<List<JokeModel>>()
+    val liveJokesList: LiveData<List<JokeModel>> = _liveJokesList
 
     val actionRefresh = { doFetchJoke() }
-    val actionRate = { item: Int, rating: Float -> doRate(item, rating) }
+    val actionRate = { id: String, rating: Float -> doRate(id, rating) }
     val actionClear = { doClear() }
 
     // endregion
@@ -32,18 +34,18 @@ class SwipeAndRecyclerViewModel(
             .fetch()
             .apply {
                 jokesList.add(0, this)
-                liveJokesList.postValueAndParam(jokesList, 0)
+                _liveJokesList.postValue(jokesList)
             }
     }
 
-    private fun doRate(item: Int, rating: Float) = viewModelScope.launch(Dispatchers.IO) {
-        jokesList[item].rating = rating
-        liveJokesList.postValueAndParam(jokesList, item)
+    private fun doRate(id: String, rating: Float) {
+        jokesList.find { it.id == id }?.rating = rating
+        _liveJokesList.value = jokesList
     }
 
     private fun doClear() = viewModelScope.launch(Dispatchers.IO) {
         jokesList.clear()
-        liveJokesList.postValueOnly(jokesList)
+        _liveJokesList.postValue(jokesList)
     }
 
     // endregion

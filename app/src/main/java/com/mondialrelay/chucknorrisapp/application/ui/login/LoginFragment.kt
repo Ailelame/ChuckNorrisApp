@@ -49,6 +49,9 @@ class LoginFragment : Fragment() {
             editTextTextPersonName.addTextChangedListener {
                 textInputLayout.error = if ("Chuck".startsWith(it?.toString() ?: "")) null else "Chuck, ONLY Chuck !"
             }
+            skipLogin.setOnClickListener {
+                navValidate()
+            }
         }
     }
 
