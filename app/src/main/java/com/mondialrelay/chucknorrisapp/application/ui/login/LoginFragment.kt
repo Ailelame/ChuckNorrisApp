@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navValidate() {
-        findNavController().navigate(R.id.action_loginFragment_to_swipeAndRecyclerFragment)
+        findNavController().navigate(R.id.action_loginFragment_to_chuckFeedFragment)
     }
 
     // endregion

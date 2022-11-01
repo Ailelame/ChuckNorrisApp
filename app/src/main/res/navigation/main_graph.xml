@@ -14,6 +14,9 @@
             android:id="@+id/action_loginFragment_to_swipeAndRecyclerFragment"
             app:destination="@id/swipeAndRecyclerFragment"
             app:popUpTo="@id/swipeAndRecyclerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_chuckFeedFragment"
+            app:destination="@id/chuckFeedFragment" />
     </fragment>
 
     <fragment
@@ -21,5 +24,9 @@
         android:name="com.mondialrelay.chucknorrisapp.application.ui.home.SwipeAndRecyclerFragment"
         android:label="SwipeAndRecyclerFragment"
         tools:layout="@layout/fragment_swipe_and_recycler"/>
+    <fragment
+        android:id="@+id/chuckFeedFragment"
+        android:name="com.mondialrelay.chucknorrisapp.application.ui.compose_list.ChuckFeedFragment"
+        android:label="ChuckFeedFragment" />
 
 </navigation>

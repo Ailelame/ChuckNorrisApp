@@ -57,7 +57,7 @@ class SwipeAndRecyclerFragment : Fragment() {
         }
         with(viewBinding) {
             swiperefresh.setOnRefreshListener {
-                viewModel.actionRefresh.invoke()
+                viewModel.actionAddJoke.invoke()
             }
             floatingActionButton.setOnClickListener {
                 viewModel.actionClear.invoke()
