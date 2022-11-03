@@ -29,27 +29,28 @@ private val DarkColorPalette = darkColors(
 //)
 
 private val LightColorPalette = lightColors(
-    surface = Blue,
-    onSurface = Color.White,
-    primary = LightBlue,
-    onPrimary = Navy
+    surface = Color.White,
+    onSurface = Color.Black,
+    primary = Color.White,
+    onPrimary = Color.Black
 )
+
 
 @Composable
 fun ChuckNorris_Theme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+   darkTheme: Boolean = isSystemInDarkTheme(),
+   content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+   val colors = if (darkTheme) {
+       DarkColorPalette
+   } else {
+       LightColorPalette
+   }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+   MaterialTheme(
+       colors = colors,
+       typography = Typography,
+       shapes = Shapes,
+       content = content
+   )
 }
